@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Job Portal - Your Career Companion</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">🚀 AI Job Portal</div>
+            <div class="nav-links">
+                <a href="#home" onclick="showSection('home')">Home</a>
+                <a href="#resume-analyzer" onclick="showSection('resume-analyzer')">Resume Analyzer</a>
+                <a href="#resume-builder" onclick="showSection('resume-builder')">Resume Builder</a>
+                <a href="#jobs" onclick="showSection('jobs')">Jobs</a>
+                <a href="#interview" onclick="showSection('interview')">Mock Interview</a>
+                <a href="#" onclick="showSection('auth')" id="authLink">Login</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Section -->
+    <section id="home" class="section active">
+        <div class="hero">
+            <h1>Welcome to AI Job Portal</h1>
+            <p>Your intelligent career companion powered by AI</p>
+            <div class="hero-buttons">
+                <button onclick="showSection('auth')" class="btn-primary">Get Started</button>
+                <button onclick="showSection('jobs')" class="btn-secondary">Browse Jobs</button>
+            </div>
+        </div>
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon">📄</div>
+                <h3>Resume Analyzer</h3>
+                <p>Get AI-powered insights to improve your resume</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">✏️</div>
+                <h3>Resume Builder</h3>
+                <p>Create professional resumes with AI assistance</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💼</div>
+                <h3>Job Portal</h3>
+                <p>Find perfect job matches with AI recommendations</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎤</div>
+                <h3>Mock Interviews</h3>
+                <p>Practice with AI-powered interview simulations</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Auth Section -->
+    <section id="auth" class="section">
+        <div class="auth-container">
+            <div class="auth-tabs">
+                <button class="tab-btn active" onclick="switchAuthTab('login')">Login</button>
+                <button class="tab-btn" onclick="switchAuthTab('register')">Register</button>
+            </div>
+
+            <div id="login-form" class="auth-form active">
+                <h2>Login</h2>
+                <input type="email" id="login-email" placeholder="Email" required>
+                <input type="password" id="login-password" placeholder="Password" required>
+                <button onclick="login()" class="btn-primary">Login</button>
+            </div>
+
+            <div id="register-form" class="auth-form">
+                <h2>Register</h2>
+                <input type="text" id="reg-name" placeholder="Full Name" required>
+                <input type="email" id="reg-email" placeholder="Email" required>
+                <input type="password" id="reg-password" placeholder="Password" required>
+                <select id="reg-usertype">
+                    <option value="jobseeker">Job Seeker</option>
+                    <option value="recruiter">Recruiter</option>
+                </select>
+                <button onclick="register()" class="btn-primary">Register</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resume Analyzer Section -->
+    <section id="resume-analyzer" class="section">
+        <div class="container">
+            <h1>AI Resume Analyzer</h1>
+            <p class="subtitle">Upload your resume for instant AI-powered analysis</p>
+
+            <div class="upload-area" id="upload-area">
+                <div class="upload-icon">📤</div>
+                <p>Drag & drop your resume here or click to browse</p>
+                <input type="file" id="resume-file" accept=".pdf,.doc,.docx" onchange="handleResumeUpload(event)">
+                <button onclick="document.getElementById('resume-file').click()" class="btn-primary">Choose File</button>
+            </div>
+
+            <div id="analysis-results" class="analysis-results" style="display: none;">
+                <h2>Analysis Results</h2>
+                <div class="score-cards">
+                    <div class="score-card">
+                        <h3>ATS Score</h3>
+                        <div class="score" id="ats-score">0</div>
+                    </div>
+                    <div class="score-card">
+                        <h3>Overall Score</h3>
+                        <div class="score" id="overall-score">0</div>
+                    </div>
+                </div>
+
+                <div class="analysis-section">
+                    <h3>Keywords Found</h3>
+                    <div id="keywords-list" class="tags"></div>
+                </div>
+
+                <div class="analysis-section">
+                    <h3>Missing Sections</h3>
+                    <div id="missing-sections" class="list"></div>
+                </div>
+
+                <div class="analysis-section">
+                    <h3>Suggestions</h3>
+                    <div id="suggestions-list" class="list"></div>
+                </div>
+
+                <div class="analysis-section">
+                    <h3>Strengths</h3>
+                    <div id="strengths-list" class="list"></div>
+                </div>
+
+                <div class="analysis-section">
+                    <h3>Areas for Improvement</h3>
+                    <div id="improvements-list" class="list"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resume Builder Section -->
+    <section id="resume-builder" class="section">
+        <div class="container">
+            <h1>AI Resume Builder</h1>
+            <div class="builder-container">
+                <div class="builder-form">
+                    <div class="form-step active" id="step1">
+                        <h2>Personal Information</h2>
+                        <input type="text" id="builder-name" placeholder="Full Name">
+                        <input type="email" id="builder-email" placeholder="Email">
+                        <input type="tel" id="builder-phone" placeholder="Phone">
+                        <input type="text" id="builder-location" placeholder="Location">
+                        <textarea id="builder-summary" placeholder="Professional Summary"></textarea>
+                        <button onclick="generateSummary()" class="btn-secondary">Generate AI Summary</button>
+                    </div>
+
+                    <div class="form-step" id="step2">
+                        <h2>Work Experience</h2>
+                        <div id="experience-list"></div>
+                        <button onclick="addExperience()" class="btn-secondary">Add Experience</button>
+                    </div>
+
+                    <div class="form-step" id="step3">
+                        <h2>Education</h2>
+                        <div id="education-list"></div>
+                        <button onclick="addEducation()" class="btn-secondary">Add Education</button>
+                    </div>
+
+                    <div class="form-step" id="step4">
+                        <h2>Skills</h2>
+                        <input type="text" id="skill-input" placeholder="Add a skill">
+                        <button onclick="addSkill()" class="btn-secondary">Add Skill</button>
+                        <div id="skills-list" class="tags"></div>
+                        <button onclick="getSkillSuggestions()" class="btn-secondary">Get AI Suggestions</button>
+                    </div>
+
+                    <div class="builder-nav">
+                        <button onclick="prevStep()" class="btn-secondary">Previous</button>
+                        <button onclick="nextStep()" class="btn-primary">Next</button>
+                        <button onclick="exportResume()" class="btn-primary">Export Resume</button>
+                    </div>
+                </div>
+
+                <div class="builder-preview">
+                    <h3>Preview</h3>
+                    <div id="resume-preview" class="resume-preview"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Jobs Section -->
+    <section id="jobs" class="section">
+        <div class="container">
+            <h1>Job Listings</h1>
+
+            <div class="job-filters">
+                <input type="text" id="search-jobs" placeholder="Search jobs..." onkeyup="filterJobs()">
+                <select id="filter-location" onchange="filterJobs()">
+                    <option value="">All Locations</option>
+                    <option value="remote">Remote</option>
+                    <option value="onsite">On-site</option>
+                    <option value="hybrid">Hybrid</option>
+                </select>
+                <select id="filter-type" onchange="filterJobs()">
+                    <option value="">All Types</option>
+                    <option value="full-time">Full-time</option>
+                    <option value="part-time">Part-time</option>
+                    <option value="contract">Contract</option>
+                </select>
+            </div>
+
+            <div class="jobs-grid" id="jobs-list">
+                <!-- Jobs will be loaded here -->
+            </div>
+
+            <button onclick="showSection('post-job')" class="btn-primary floating-btn" id="post-job-btn" style="display: none;">+ Post Job</button>
+        </div>
+    </section>
+
+    <!-- Post Job Section -->
+    <section id="post-job" class="section">
+        <div class="container">
+            <h1>Post a Job</h1>
+            <div class="job-form">
+                <input type="text" id="job-title" placeholder="Job Title">
+                <input type="text" id="job-company" placeholder="Company Name">
+                <input type="text" id="job-location" placeholder="Location">
+                <select id="job-type">
+                    <option value="full-time">Full-time</option>
+                    <option value="part-time">Part-time</option>
+                    <option value="contract">Contract</option>
+                </select>
+                <input type="text" id="job-salary" placeholder="Salary Range">
+                <textarea id="job-description" placeholder="Job Description" rows="6"></textarea>
+                <textarea id="job-requirements" placeholder="Requirements (one per line)" rows="4"></textarea>
+                <button onclick="postJob()" class="btn-primary">Post Job</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mock Interview Section -->
+    <section id="interview" class="section">
+        <div class="container">
+            <h1>AI Mock Interview</h1>
+
+            <div id="interview-setup" class="interview-setup">
+                <h2>Setup Your Interview</h2>
+                <select id="interview-type">
+                    <option value="technical">Technical Interview</option>
+                    <option value="behavioral">Behavioral Interview</option>
+                    <option value="hr">HR/General Interview</option>
+                </select>
+                <select id="interview-level">
+                    <option value="entry">Entry Level</option>
+                    <option value="mid">Mid Level</option>
+                    <option value="senior">Senior Level</option>
+                </select>
+                <button onclick="startInterview()" class="btn-primary">Start Interview</button>
+            </div>
+
+            <div id="interview-session" class="interview-session" style="display: none;">
+                <div class="interview-progress">
+                    <span id="question-number">Question 1 of 3</span>
+                </div>
+                <div class="interview-question">
+                    <h3 id="current-question"></h3>
+                </div>
+                <textarea id="interview-answer" placeholder="Type your answer here..." rows="6"></textarea>
+                <div class="interview-controls">
+                    <button onclick="nextQuestion()" class="btn-primary">Next Question</button>
+                    <button onclick="submitInterview()" class="btn-secondary">Submit Interview</button>
+                </div>
+            </div>
+
+            <div id="interview-results" class="interview-results" style="display: none;">
+                <h2>Interview Analysis</h2>
+                <div class="score-cards">
+                    <div class="score-card">
+                        <h3>Overall Score</h3>
+                        <div class="score" id="interview-overall-score">0</div>
+                    </div>
+                    <div class="score-card">
+                        <h3>Communication</h3>
+                        <div class="score" id="interview-communication-score">0</div>
+                    </div>
+                    <div class="score-card">
+                        <h3>Technical</h3>
+                        <div class="score" id="interview-technical-score">0</div>
+                    </div>
+                    <div class="score-card">
+                        <h3>Confidence</h3>
+                        <div class="score" id="interview-confidence-score">0</div>
+                    </div>
+                </div>
+
+                <div class="analysis-section">
+                    <h3>Strengths</h3>
+                    <div id="interview-strengths" class="list"></div>
+                </div>
+
+                <div class="analysis-section">
+                    <h3>Areas for Improvement</h3>
+                    <div id="interview-improvements" class="list"></div>
+                </div>
+
+                <button onclick="restartInterview()" class="btn-primary">Practice Again</button>
+            </div>
+        </div>
+    </section>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
